@@ -2,6 +2,7 @@ package org.coach.tdd.template;
 
 public class Library {
     private int [][] startMatric ;
+
     public void creatStartMatric(int row, int col) {
         startMatric = new int [row + 1][col + 1];
         for (int i = 0; i < row + 1; i++) {
@@ -19,12 +20,14 @@ public class Library {
             }
         }
         startMatric = nextWorld;
-//        printToScream();
+        printToScream();
+
     }
-    public void getNumWorld(int numWorld) {
+    public void getNumWorld(int numWorld, int holdTimeEveryWorld) throws InterruptedException {
         int numWorldSub = numWorld;
         while (numWorldSub-- > 0) {
             getNextWorld();
+            Thread.sleep(holdTimeEveryWorld * 1000);
         }
     }
 
@@ -71,9 +74,14 @@ public class Library {
     public void printToScream() {
         for (int i = 0; i < startMatric.length; i++) {
             for (int j = 0; j < startMatric[0].length; j++) {
-                System.out.print(startMatric[i][j] + " ");
+                if (startMatric[i][j] == 1) {
+                    System.out.print(" O ");
+                } else {
+                    System.out.print(" X ");
+                }
             }
             System.out.println();
         }
+        System.out.println();
     }
 }
