@@ -1,19 +1,19 @@
 package org.coach.tdd.template;
 
 public class Library {
-    private int [][] startMatric ;
+    private boolean [][] startMatric ;
 
     public void creatStartMatric(int row, int col) {
-        startMatric = new int [row + 1][col + 1];
-        for (int i = 0; i < row + 1; i++) {
-            for (int j = 0; j < col + 1; j++) {
-                startMatric[i][j] = 0;
+        startMatric = new boolean[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                startMatric[i][j] = false;
             }
         }
     }
 
     public void getNextWorld() {
-        int[][] nextWorld = new int [startMatric.length][startMatric[0].length];
+        boolean[][] nextWorld = new boolean[startMatric.length][startMatric[0].length];
         for (int i = 0; i < startMatric.length; i++) {
             for (int j = 0; j < startMatric[0].length; j++) {
                 nextWorld[i][j] = returnNeighbour(i, j);
@@ -31,15 +31,15 @@ public class Library {
         }
     }
 
-    private int returnNeighbour(int row, int col) {
+    private boolean returnNeighbour(int row, int col) {
         int neighbourCount = getNeibourCount(row, col);
-        int nextStation = 0;
+        boolean nextStation = false;
         if (neighbourCount == 3) {
-            nextStation = 1;
+            nextStation = true;
         } else if (neighbourCount == 2) {
             nextStation = startMatric[row][col];
         } else {
-            nextStation = 0;
+            nextStation = false;
         }
         return nextStation;
     }
@@ -50,31 +50,43 @@ public class Library {
             for (int j = -1; j < 2; j++) {
                 int rowNeighbour = row + i;
                 int colNeighbour = col + j;
-                if (rowNeighbour < 0 || rowNeighbour > startMatric.length - 1) {
+                if (isEdge(rowNeighbour, colNeighbour)) {
                     continue;
                 }
-                if (colNeighbour < 0 || colNeighbour > startMatric[0].length - 1) {
-                    continue;
+                if (startMatric[rowNeighbour][colNeighbour]) {
+                    neighbourCount++;
                 }
-                neighbourCount += startMatric[rowNeighbour][colNeighbour];
             }
         }
-        neighbourCount -= startMatric[row][col];
+        if (startMatric[row][col]) {
+            neighbourCount--;
+        }
         return neighbourCount;
     }
 
-    public int[][] returnMatric() {
+    private boolean isEdge(int rowNeighbour, int colNeighbour) {
+        boolean isAnEdge = false;
+        if (rowNeighbour < 0 || rowNeighbour > startMatric.length - 1) {
+            isAnEdge = true;
+        }
+        if (colNeighbour < 0 || colNeighbour > startMatric[0].length - 1) {
+            isAnEdge = true;
+        }
+        return isAnEdge;
+    }
+
+    public boolean[][] returnMatric() {
         return startMatric;
     }
 
     public void setDefaultLife(int i, int j) {
-        startMatric[i][j] = 1;
+        startMatric[i][j] = true;
     }
 
     public void printToScream() {
         for (int i = 0; i < startMatric.length; i++) {
             for (int j = 0; j < startMatric[0].length; j++) {
-                if (startMatric[i][j] == 1) {
+                if (startMatric[i][j]) {
                     System.out.print(" O ");
                 } else {
                     System.out.print(" X ");

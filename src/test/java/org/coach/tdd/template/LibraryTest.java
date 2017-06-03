@@ -5,88 +5,101 @@ import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
 public class LibraryTest {
-//    @Test
-//    public void shouldSomeLibraryMethodReturnTrue() {
-//        Library classUnderTest = new Library();
-//        assertTrue("someLibraryMethod should return 'true'", classUnderTest.someLibraryMethod());
-//    }
     @Test
     public void shouldReturnMatric() {
-        Library classUderTest = new Library();
-        int [][] testResult = new int [10][10];
+        int row = 10;
+        int col = 10;
         int [][] defaultLife = {{4, 5}, {5, 5}, {5, 6}};
-        classUderTest.creatStartMatric(9, 9);
-        for (int i = 0; i < defaultLife.length; i++) {
-            classUderTest.setDefaultLife(defaultLife[i][0], defaultLife[i][1]);
-            testResult[defaultLife[i][0]][defaultLife[i][1]] = 1;
-            testResult[defaultLife[i][0]][defaultLife[i][1]] = 1;
 
-        }
-        classUderTest.printToScream();
+        Library classUderTest = new Library();
+        classUderTest.creatStartMatric(row, col);
+        setAliveCellsInWorld(classUderTest, defaultLife);
+
+        boolean[][] testResult = new boolean[row][col];
+        setAliveCellsInWorld(testResult, defaultLife);
+
         assertArrayEquals(testResult, classUderTest.returnMatric());
     }
+
     @Test
     public void testOneStepWorldIgnoreEdge() {
+        int row = 10;
+        int col = 10;
+        int[][] defaultLife = {{4, 5}, {5, 5}, {5, 6}};
+        int[][] resultAliveCellsPoint = {{4, 5}, {5, 5}, {5, 6}, {4, 6}};
+
         Library classUderTest = new Library();
-        int[][] testResult = new int[10][10];
-        int[][] defaultLife = {{4, 5}, {5, 5}, {5, 6}, {4, 6}};
-        classUderTest.creatStartMatric(9, 9);
-        for (int i = 0; i < defaultLife.length - 1; i++) {
-            classUderTest.setDefaultLife(defaultLife[i][0], defaultLife[i][1]);
-            testResult[defaultLife[i][0]][defaultLife[i][1]] = 1;
-            testResult[defaultLife[i][0]][defaultLife[i][1]] = 1;
-        }
-        testResult[defaultLife[3][0]][defaultLife[3][1]] = 1;
+        classUderTest.creatStartMatric(row, col);
+        setAliveCellsInWorld(classUderTest, defaultLife);
         classUderTest.getNextWorld();
+
+        boolean[][] testResult = new boolean[row][col];
+        setAliveCellsInWorld(testResult, resultAliveCellsPoint);
+
         assertArrayEquals(testResult, classUderTest.returnMatric());
     }
+
     @Test
     public void testOneStepWorldEdge() {
+        int row = 10;
+        int col = 10;
+        int[][] defaultLife = {{0, 0}, {1, 0}, {1, 1}};
+        int[][] resultAliveCellsPoint = {{0, 0}, {1, 0}, {1, 1}, {0, 1}};
+
         Library classUderTest = new Library();
-        int [][] testResult = new int [10][10];
-        int [][] defaultLife = {{0, 0}, {1, 0}, {1, 1}, {0, 1}};
-        classUderTest.creatStartMatric(9, 9);
-        for (int i = 0; i < defaultLife.length - 1; i++) {
-            classUderTest.setDefaultLife(defaultLife[i][0], defaultLife[i][1]);
-            testResult[defaultLife[i][0]][defaultLife[i][1]] = 1;
-            testResult[defaultLife[i][0]][defaultLife[i][1]] = 1;
-        }
-        testResult[defaultLife[3][0]][defaultLife[3][1]] = 1;
+        classUderTest.creatStartMatric(row, col);
+        setAliveCellsInWorld(classUderTest, defaultLife);
         classUderTest.getNextWorld();
+
+        boolean[][] testResult = new boolean[row][col];
+        setAliveCellsInWorld(testResult, resultAliveCellsPoint);
+
         assertArrayEquals(testResult, classUderTest.returnMatric());
     }
+
     @Test
     public void testNumStepWorldEdge() throws InterruptedException {
+        int row = 10;
+        int col = 10;
+        int[][] defaultLife = {{0, 0}, {0, 1}, {0, 2}, {1, 0}, {1, 1}, {1, 2}, {2, 0}, {2, 1}, {2, 2}};
+        int[][] resultAliveCellsPoint = {{1, 1}, {1, 2}, {1, 3}, {2, 1}, {2, 3}, {3, 1}, {3, 2}};
+
         Library classUderTest = new Library();
-        int [][] testResult = new int [10][10];
-//        int [][] defaultLife = {{0, 0}, {1, 0}, {1, 1}};
-        classUderTest.creatStartMatric(9, 9);
-        for (int i = 0; i < 3 ; i++) {
-            for (int j = 0; j < 3; j++) {
-                classUderTest.setDefaultLife(i, j);
-            }
-        }
-        testResult[1][1] = 1;
-        testResult[1][2] = 1;
-        testResult[1][3] = 1;
-        testResult[2][1] = 1;
-        testResult[2][3] = 1;
-        testResult[3][1] = 1;
-        testResult[3][2] = 1;
+        classUderTest.creatStartMatric(row, col);
+        setAliveCellsInWorld(classUderTest, defaultLife);
         classUderTest.getNumWorld(3, 2);
-//        classUderTest.printToScream();
+
+        boolean[][] testResult = new boolean[row][col];
+        setAliveCellsInWorld(testResult, resultAliveCellsPoint);
         assertArrayEquals(testResult, classUderTest.returnMatric());
     }
+
     @Test
     public void testPrintOut() throws InterruptedException {
+        int row = 10;
+        int col = 10;
+        int[][] defaultLife = {{0, 0}, {0, 1}, {0, 2}, {1, 0}, {1, 1}, {1, 2}, {2, 0}, {2, 1}, {2, 2}};
+//        int[][] resultAliveCellsPoint = {};
+
         Library classUderTest = new Library();
-        int [][] testResult = new int [20][20];
-        int [][] defaultLife = {{0, 0}, {0, 1}, {0, 2}, {1, 0}, {1, 1}, {1, 2}, {2, 0}, {2, 1}, {2, 2}};
-        classUderTest.creatStartMatric(9, 9);
+        classUderTest.creatStartMatric(row, col);
+        setAliveCellsInWorld(classUderTest, defaultLife);
+
+//        boolean[][] testResult = new boolean[row][col];
+        classUderTest.getNumWorld(5, 2);
+    }
+
+    private void setAliveCellsInWorld(boolean[][] testResult, int[][] defaultLife) {
+        for (int i = 0; i < defaultLife.length; i++) {
+            testResult[defaultLife[i][0]][defaultLife[i][1]] = true;
+            testResult[defaultLife[i][0]][defaultLife[i][1]] = true;
+        }
+    }
+
+    private void setAliveCellsInWorld(Library classUderTest, int[][] defaultLife) {
         for (int i = 0; i < defaultLife.length; i++) {
             classUderTest.setDefaultLife(defaultLife[i][0], defaultLife[i][1]);
         }
-        classUderTest.getNumWorld(5, 2);
     }
 
 }
