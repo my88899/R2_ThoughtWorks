@@ -12,14 +12,20 @@ public class Library {
     }
 
     public void getNextWorld() {
-        int[][] nextWorld = startMatric;
+        int[][] nextWorld = new int [startMatric.length][startMatric[0].length];
         for (int i = 0; i < startMatric.length; i++) {
             for (int j = 0; j < startMatric[0].length; j++) {
                 nextWorld[i][j] = returnNeighbour(i, j);
             }
         }
         startMatric = nextWorld;
-        printToScream();
+//        printToScream();
+    }
+    public void getNumWorld(int numWorld) {
+        int numWorldSub = numWorld;
+        while (numWorldSub-- > 0) {
+            getNextWorld();
+        }
     }
 
     private int returnNeighbour(int row, int col) {

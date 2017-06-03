@@ -55,6 +55,28 @@ public class LibraryTest {
         classUderTest.getNextWorld();
         assertArrayEquals(testResult, classUderTest.returnMatric());
     }
+    @Test
+    public void testNumStepWorldEdge() {
+        Library classUderTest = new Library();
+        int [][] testResult = new int [10][10];
+//        int [][] defaultLife = {{0, 0}, {1, 0}, {1, 1}};
+        classUderTest.creatStartMatric(9, 9);
+        for (int i = 0; i < 3 ; i++) {
+            for (int j = 0; j < 3; j++) {
+                classUderTest.setDefaultLife(i, j);
+            }
+        }
+        testResult[1][1] = 1;
+        testResult[1][2] = 1;
+        testResult[1][3] = 1;
+        testResult[2][1] = 1;
+        testResult[2][3] = 1;
+        testResult[3][1] = 1;
+        testResult[3][2] = 1;
+        classUderTest.getNumWorld(3);
+        classUderTest.printToScream();
+        assertArrayEquals(testResult, classUderTest.returnMatric());
+    }
 
 }
 
