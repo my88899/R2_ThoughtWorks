@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class LibraryTest {
     @Test
-    public void shouldReturnMatric() {
+    public void shouldReturnMatric() throws InterruptedException {
         int row = 10;
         int col = 10;
         int [][] defaultLife = {{4, 5}, {5, 5}, {5, 6}};
@@ -22,7 +22,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void testOneStepWorldIgnoreEdge() {
+    public void testOneStepWorldIgnoreEdge() throws InterruptedException {
         int row = 10;
         int col = 10;
         int[][] defaultLife = {{4, 5}, {5, 5}, {5, 6}};
@@ -40,7 +40,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void testOneStepWorldEdge() {
+    public void testOneStepWorldEdge() throws InterruptedException {
         int row = 10;
         int col = 10;
         int[][] defaultLife = {{0, 0}, {1, 0}, {1, 1}};
@@ -67,7 +67,7 @@ public class LibraryTest {
         Library classUderTest = new Library();
         classUderTest.initalWorldMatric(row, col);
         setAliveCellsInWorld(classUderTest, defaultLife);
-        classUderTest.getNumWorld(3, 2);
+        classUderTest.getNumWorld(3, 1);
 
         boolean[][] testResult = new boolean[row][col];
         setAliveCellsInWorld(testResult, resultAliveCellsPoint);
