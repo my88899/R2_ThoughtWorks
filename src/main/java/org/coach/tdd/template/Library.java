@@ -1,92 +1,90 @@
 package org.coach.tdd.template;
 
 public class Library {
-    private boolean [][] startMatric ;
+    private boolean [][] worldMatric;
 
-    public void creatStartMatric(int row, int col) {
-        startMatric = new boolean[row][col];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                startMatric[i][j] = false;
-            }
-        }
+    public void initalWorldMatric(int row, int col) {
+        worldMatric = new boolean[row][col];
+//        for (int i = 0; i < row; i++) {
+//            for (int j = 0; j < col; j++) {
+//                worldMatric[i][j] = false;
+//            }
+//        }
     }
 
-    public void getNextWorld() {
-        boolean[][] nextWorld = new boolean[startMatric.length][startMatric[0].length];
-        for (int i = 0; i < startMatric.length; i++) {
-            for (int j = 0; j < startMatric[0].length; j++) {
-                nextWorld[i][j] = returnNeighbour(i, j);
+    public void getNextWorldMatric() {
+        boolean[][] nextWorldCellsStation = new boolean[worldMatric.length][worldMatric[0].length];
+        for (int i = 0; i < worldMatric.length; i++) {
+            for (int j = 0; j < worldMatric[0].length; j++) {
+                nextWorldCellsStation[i][j] = returnNextWorldCellStationInPosition(i, j);
             }
         }
-        startMatric = nextWorld;
+        worldMatric = nextWorldCellsStation;
         printToScream();
-
     }
-    public void getNumWorld(int numWorld, int holdTimeEveryWorld) throws InterruptedException {
-        int numWorldSub = numWorld;
-        while (numWorldSub-- > 0) {
-            getNextWorld();
-            Thread.sleep(holdTimeEveryWorld * 1000);
+
+    public void getNumWorld(int numOfWorldSteps, int holdTimeEveryWorldSecond) throws InterruptedException {
+        int numWorldRemainder = numOfWorldSteps;
+        while (numWorldRemainder-- > 0) {
+            getNextWorldMatric();
+            Thread.sleep(holdTimeEveryWorldSecond * 1000);
         }
     }
 
-    private boolean returnNeighbour(int row, int col) {
-        int neighbourCount = getNeibourCount(row, col);
-        boolean nextStation = false;
+    private boolean returnNextWorldCellStationInPosition(int positionRow, int positionCol) {
+        int neighbourCount = getNeighborCount(positionRow, positionCol);
+        boolean nextWorldCellStationInPosition = false;
         if (neighbourCount == 3) {
-            nextStation = true;
+            nextWorldCellStationInPosition = true;
         } else if (neighbourCount == 2) {
-            nextStation = startMatric[row][col];
+            nextWorldCellStationInPosition = worldMatric[positionRow][positionCol];
         } else {
-            nextStation = false;
+            nextWorldCellStationInPosition = false;
         }
-        return nextStation;
+        return nextWorldCellStationInPosition;
     }
 
-    private int getNeibourCount(int row, int col) {
-        int neighbourCount = 0;
+    private int getNeighborCount(int positionRow, int positionCol) {
+        int neighbourCellsCount = 0;
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                int rowNeighbour = row + i;
-                int colNeighbour = col + j;
-                if (isEdge(rowNeighbour, colNeighbour)) {
+                if (isEdge(positionRow + i, positionCol + j)) {
                     continue;
                 }
-                if (startMatric[rowNeighbour][colNeighbour]) {
-                    neighbourCount++;
+                if (worldMatric[positionRow + i][positionCol + j] == true) {
+                    neighbourCellsCount++;
                 }
             }
         }
-        if (startMatric[row][col]) {
-            neighbourCount--;
+        if (worldMatric[positionRow][positionCol] == true) {
+            neighbourCellsCount -= 1;
         }
-        return neighbourCount;
+        return neighbourCellsCount;
     }
 
-    private boolean isEdge(int rowNeighbour, int colNeighbour) {
+    private boolean isEdge(int positionRow, int positionCol) {
         boolean isAnEdge = false;
-        if (rowNeighbour < 0 || rowNeighbour > startMatric.length - 1) {
+        if (positionRow < 0 || positionRow > worldMatric.length - 1) {
             isAnEdge = true;
         }
-        if (colNeighbour < 0 || colNeighbour > startMatric[0].length - 1) {
+        if (positionCol < 0 || positionCol > worldMatric[0].length - 1) {
             isAnEdge = true;
         }
         return isAnEdge;
     }
 
     public boolean[][] returnMatric() {
-        return startMatric;
+        return worldMatric;
     }
 
     public void setDefaultLife(int i, int j) {
-        startMatric[i][j] = true;
+        worldMatric[i][j] = true;
     }
 
     public void printToScream() {
-        for (int i = 0; i < startMatric.length; i++) {
-            for (int j = 0; j < startMatric[0].length; j++) {
-                if (startMatric[i][j]) {
+        for (int i = 0; i < worldMatric.length; i++) {
+            for (int j = 0; j < worldMatric[0].length; j++) {
+                if (worldMatric[i][j]) {
                     System.out.print(" O ");
                 } else {
                     System.out.print(" X ");

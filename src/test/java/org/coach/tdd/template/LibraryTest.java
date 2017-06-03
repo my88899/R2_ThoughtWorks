@@ -12,7 +12,7 @@ public class LibraryTest {
         int [][] defaultLife = {{4, 5}, {5, 5}, {5, 6}};
 
         Library classUderTest = new Library();
-        classUderTest.creatStartMatric(row, col);
+        classUderTest.initalWorldMatric(row, col);
         setAliveCellsInWorld(classUderTest, defaultLife);
 
         boolean[][] testResult = new boolean[row][col];
@@ -29,9 +29,9 @@ public class LibraryTest {
         int[][] resultAliveCellsPoint = {{4, 5}, {5, 5}, {5, 6}, {4, 6}};
 
         Library classUderTest = new Library();
-        classUderTest.creatStartMatric(row, col);
+        classUderTest.initalWorldMatric(row, col);
         setAliveCellsInWorld(classUderTest, defaultLife);
-        classUderTest.getNextWorld();
+        classUderTest.getNextWorldMatric();
 
         boolean[][] testResult = new boolean[row][col];
         setAliveCellsInWorld(testResult, resultAliveCellsPoint);
@@ -47,9 +47,9 @@ public class LibraryTest {
         int[][] resultAliveCellsPoint = {{0, 0}, {1, 0}, {1, 1}, {0, 1}};
 
         Library classUderTest = new Library();
-        classUderTest.creatStartMatric(row, col);
+        classUderTest.initalWorldMatric(row, col);
         setAliveCellsInWorld(classUderTest, defaultLife);
-        classUderTest.getNextWorld();
+        classUderTest.getNextWorldMatric();
 
         boolean[][] testResult = new boolean[row][col];
         setAliveCellsInWorld(testResult, resultAliveCellsPoint);
@@ -65,7 +65,7 @@ public class LibraryTest {
         int[][] resultAliveCellsPoint = {{1, 1}, {1, 2}, {1, 3}, {2, 1}, {2, 3}, {3, 1}, {3, 2}};
 
         Library classUderTest = new Library();
-        classUderTest.creatStartMatric(row, col);
+        classUderTest.initalWorldMatric(row, col);
         setAliveCellsInWorld(classUderTest, defaultLife);
         classUderTest.getNumWorld(3, 2);
 
@@ -82,7 +82,7 @@ public class LibraryTest {
 //        int[][] resultAliveCellsPoint = {};
 
         Library classUderTest = new Library();
-        classUderTest.creatStartMatric(row, col);
+        classUderTest.initalWorldMatric(row, col);
         setAliveCellsInWorld(classUderTest, defaultLife);
 
 //        boolean[][] testResult = new boolean[row][col];
